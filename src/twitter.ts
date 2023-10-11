@@ -225,3 +225,30 @@ export const connectStream = (retryAttempt: number = 0) => {
 
   return stream;
 };
+
+// stream vendors
+export const streamVendors = async (vendorList: String[]) => {
+  try {
+    const currentRules = await getAllRules();
+    if (currentRules.hasOwnProperty('data')) {
+      await deleteAllRules(currentRules);
+    }
+
+    connectStream();
+
+    const rules: Rule[] = [
+      {
+        value: `has:geo (from:${vendorList.join(' OR from')})`,
+        tag: 'vendors-geo',
+      },
+    ];
+
+    await setRules(rules);
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+
+    throw new Error('streamVendors unexpected error');
+  }
+};
