@@ -3,6 +3,8 @@ node_modules
 /build
 ecs_env_vars.json
 /.yarn
+package-lock.json
+/node_modules
 
 # Local .terraform directories
 **/.terraform/*
