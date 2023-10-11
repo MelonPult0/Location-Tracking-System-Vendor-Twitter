@@ -7,9 +7,11 @@ dotenv.config();
 
 AWS.config.update({ region: process.env.AWS_REGION });
 
-const { DynamoDB } = AWS;
+const { DynamoDB, SQS } = AWS;
 
 const dynamodb = new DynamoDB();
+
+const sqs = new SQS();
 
 // 1 - Describe a table
 export const dynamodbDescribeTable = async (tableName: string) => {
@@ -134,5 +136,30 @@ export const dynamodbUpdateTweet = async (
       throw e;
     }
     throw new Error('dynamodbUpdateTweet error object unknown type');
+  }
+};
+
+// 5 - SQS message
+// Question: Why SQS
+// Answer: That's a basic message queue I need. Our application is not traffic heavy, 
+//          and we don't have much more users, so the basic SQS service is free and is reliable.
+export const sqsSendMessage = async (
+  queueUrl: string,
+  body: string
+) => {
+  try {
+    const params: AWS.SQS.SendMessageRequest = {
+      MessageBody: body,
+      QueueUrl: queueUrl,
+    };
+
+    const res = await sqs.sendMessage(params).promise();
+    console.log('Send Message!');
+    return res;
+  } catch (e) {
+    if (e instanceof Error) {
+      throw e;
+    }
+    throw new Error('sqsSendMessage error object unknown type');
   }
 };
