@@ -6,6 +6,7 @@ ecs_env_vars.json
 package-lock.json
 /node_modules
 .yarnrc.yml
+ecs_env_vars.json
 
 # Local .terraform directories
 **/.terraform/*
