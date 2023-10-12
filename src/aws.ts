@@ -2,6 +2,8 @@ import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
 import { TweetFormatted } from './types/twitter';
+import { Vendor } from 'aws-sdk/clients/directconnect';
+import { AttributeValue } from '@aws-sdk/client-dynamodb';
 
 dotenv.config();
 
@@ -55,7 +57,7 @@ export const dynamodbScanTable = async function* (
       lastEvaluatedKey = (result as AWS.DynamoDB.ScanOutput)
         .LastEvaluatedKey;
 
-      result.Items = result.Items?.map((item) => unmarshall(item));
+      result.Items = result.Items?.map((item) => unmarshall(item as Record<Vendor, AttributeValue>));
 
       yield result;
     } catch (e) {
