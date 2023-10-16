@@ -2,7 +2,7 @@ node_modules
 .env
 /build
 ecs_env_vars.json
-/.yarn
+.yarn/
 package-lock.json
 /node_modules
 .yarnrc.yml
