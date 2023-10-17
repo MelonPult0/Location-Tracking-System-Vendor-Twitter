@@ -29,7 +29,7 @@ variable "ecs_twitter_env_secrets_key" {
 
 variable "ecs_twitter_env_secrets_folder" {
   description = "Secrets S3 folder"
-  default = "gw-vendor-twitter-secrets"
+  default = "mt-vendor-twitter-secrets"
 }
 
 variable "dynamodb_vendor_table_name" {
